@@ -33,5 +33,39 @@ export async function PATCH(
     });
 
     return NextResponse.json(server);
-  } catch (error) {}
+  } catch (error) {
+    console.log("[SERVER_ID_PATCH]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  {
+    params,
+  }: {
+    params: {
+      serverId: string;
+    };
+  }
+) {
+  try {
+    const profile = await currentProfile();
+
+    if (!profile) {
+      return redirectToSignIn();
+    }
+
+    const server = await db.server.delete({
+      where: {
+        id: params.serverId,
+        profileId: profile.id, // Only Admin can modify the server
+      },
+    });
+
+    return NextResponse.json(server);
+  } catch (error) {
+    console.log("[SERVER_ID_DELETE]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
 }
