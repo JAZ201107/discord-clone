@@ -193,26 +193,23 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 />
               ))}
             </div>
+          </div>
+        )}
 
-            {!!members?.length && (
-              <div className="mb-2">
-                <ServerSection
-                  sectionType="members"
-                  role={role}
-                  label="Member"
-                  server={server}
-                />
-                <div className="space-y-[2px]">
-                  {members.map((member) => (
-                    <ServerMember
-                      key={member.id}
-                      member={member}
-                      server={server}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* //TODO: Put member down the sidebar and scroll it */}
+        {!!members?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="members"
+              role={role}
+              label="Member"
+              server={server}
+            />
+            <div className="space-y-[2px]">
+              {members.map((member) => (
+                <ServerMember key={member.id} member={member} server={server} />
+              ))}
+            </div>
           </div>
         )}
       </ScrollArea>
